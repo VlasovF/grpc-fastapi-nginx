@@ -4,17 +4,26 @@ import logging
 import grpc
 import docs_pb2
 import docs_pb2_grpc
+from  google.protobuf.json_format import MessageToDict
+from pysondb import getDb
+
+
+db = getDb('storage/data.json')
 
 
 class DocsSaver(docs_pb2_grpc.DocsSaver):
     def SaveDocument(self, request, context):
-        print(f"One document article_id: {request.article_id}")
+        document = MessageToDict(request)
+        db.add(document)
         return docs_pb2.SaveDocumentReply(message="success")
 
 
     def SaveDocuments(self, request_iterator, context):
+        documents = []
         for request in request_iterator:
-            print(f"Article id: {request.article_id}")
+            document = MessageToDict(request)
+            documents.append(document)
+        db.addMany(documents)
         return docs_pb2.SaveDocumentReply(message="success")
 
 
