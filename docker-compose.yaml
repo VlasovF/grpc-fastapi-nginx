@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  web:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - docs
+
+  api:
+    build:
+      context: fastapi-finder
+    ports:
+      - "8000"
+    entrypoint: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./storage:/usr/src/app/storage
+
+  docs:
+    build:
+      context: grpc-saver
+    ports:
+      - "50051"
+    entrypoint: ["python3","server.py"]
+    volumes:
+      - ./storage:/usr/src/app/storage
