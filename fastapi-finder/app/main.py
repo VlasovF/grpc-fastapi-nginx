@@ -16,9 +16,6 @@ class MultiDocumentsRequest(BaseModel):
     article_ids: List[int]
 
 
-class Document()
-
-
 @app.get("/ping")
 def ping():
     return {"message": "pong"}

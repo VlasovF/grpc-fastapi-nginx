@@ -7,6 +7,6 @@ RUN mkdir storage
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY app/* ./
+COPY server/* ./
 
 CMD ["python3", "server.py"]
