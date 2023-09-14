@@ -11,17 +11,16 @@ class DocsSaverClient:
     def __init__(self, server_url):
         self.url = server_url
 
-
     def send_document(self, document: dict) -> str:
         with grpc.insecure_channel(self.url) as channel:
             stub = docs_pb2_grpc.DocsSaverStub(channel)
-            response = stub.SaveDocument(docs_pb2.SaveDocumentRequest(**document))
+            response = stub.SaveDocument(
+                docs_pb2.SaveDocumentRequest(**document))
 
         return response.message
 
-
     def send_documents(self, documents: List[dict]) -> str:
-        
+
         def document_iterator(docs):
             for doc in docs:
                 yield docs_pb2.SaveDocumentRequest(**doc)

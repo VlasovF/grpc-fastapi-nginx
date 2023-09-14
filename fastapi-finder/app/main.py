@@ -1,14 +1,12 @@
 from typing import List
 
 from fastapi import FastAPI
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 from pysondb import getDb
 from pydantic import BaseModel
 
 from config import settings
 
-app= FastAPI()
+app = FastAPI()
 db = getDb(settings.base_path)
 
 

@@ -4,7 +4,7 @@ import logging
 import grpc
 import docs_pb2
 import docs_pb2_grpc
-from  google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToDict
 from pysondb import getDb
 
 
@@ -16,7 +16,6 @@ class DocsSaver(docs_pb2_grpc.DocsSaver):
         document = MessageToDict(request)
         db.add(document)
         return docs_pb2.SaveDocumentReply(message="success")
-
 
     def SaveDocuments(self, request_iterator, context):
         documents = []
